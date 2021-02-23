@@ -1,34 +1,38 @@
 #include<stdio.h>
+#include<stdlib.h>
 #include "list.h"
 
 void list_add(struct list_node *headNode, struct list_node *newNode) {
 
-	struct list_node *nodeAddress =headNode;
+	struct list_node* prev;
+	struct list_node* temp =headNode;
 
-	while ((nodeAddress->next) != NULL) {
-		nodeAddress = nodeAddress->next;
+	while (temp->next) {
+		prev = temp;
+		temp = temp->next;
 	}
-	nodeAddress->next = newNode;
+	temp->prev = prev;
+	temp->next = newNode;
 }
 
-void list_remove(struct list_node *headNode, struct list_node *prevNode) {
+void list_remove(struct list_node *headNode, int data) {
 
-	while (headNode != NULL) {
+	struct list_node* head = headNode;
+	if (head == NULL) {
+		return;
+	}
 
-	struct list_node *nodeAddress =prevNode;
+	if (head->data == data) {
+		headNode = head->next;
+		return;
+	}
 
-	if (((headNode->next) = nodeAddress)) {
-
-		struct list_node *keyNode = headNode->next->next;
-
-		headNode->next = keyNode;
-
+	while(head->next) {
+		if (data == head->data) {
+			head->prev->next = head->next;
+			head = head->next;
+			continue;
 		}
-		headNode = headNode->next;
+		head = head->next;
 	}
-}
-
-
-void main() {
-
 }
