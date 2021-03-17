@@ -26,6 +26,15 @@ void kernel_main() {
 //	led_init();
 //	clear_bss();
 	init_pfa_list();
+
+	struct ppage* test = free_list->next;
+	esp_printf(putc, "Physcial address:  %x \n", test->physical_addr);
+	test = allocate_physical_pages(2);
+	esp_printf(putc, "ppages -->  %x \n", test);
+	esp_printf(putc, "ppages -->  %x \n", test->physical_addr);
+	free_physical_pages(test);
+	test = free_list->next;
+	esp_printf(putc, "Freed:  %x \n", test->physical_addr);
 	while(1){
 
 
