@@ -1,12 +1,16 @@
-#include<stdio.h>
+//#include<stdio.h>
 #include"list.h"
-#include"gpio.h"
+//#include"gpio.h"
 #include "rprintf.h"
 #include "serial.h"
+#include "page.h"
+
+#define NULL (void*)0
+//int *mu_io_reg = 0x3F215040;
 
 extern long __bss_start;
 extern long __bss_end;
-
+extern struct ppage* free_list;
 int global;
 
 void clear_bss() {
@@ -21,14 +25,11 @@ void clear_bss() {
 void kernel_main() {
 //	led_init();
 //	clear_bss();
-/*    	while(1){
-		led_on();
-		delay(1);
-		led_off();
-		delay(1);
-*/
+	init_pfa_list();
+	while(1){
 
-	esp_printf(putc, "memory location: %d\r\n", kernel_main);
+
+//	esp_printf(putc, "memory location: %d\r\n", kernel_main);
 	}
 }
 

@@ -1,38 +1,42 @@
-#include<stdio.h>
-#include<stdlib.h>
+#include<stddef.h>
 #include "list.h"
 
-void list_add(struct list_node *headNode, struct list_node *newNode) {
+//from neil
+/*
+ * listAdd
+ *
+ * Adds newElement to a linked list pointed to by list. When calling this function, pass the address of list head.
+ *
+ */
+void listAdd(struct listElement **head, struct listElement *newElement){
+    struct listElement *iterator = (struct listElement*)head ;
 
-	struct list_node* prev;
-	struct list_node* temp =headNode;
+    // Link element b into the list between iterator and iterator->next.
+    newElement->next = iterator->next ;
+    newElement->prev = iterator ;
 
-	while (temp->next) {
-		prev = temp;
-		temp = temp->next;
-	}
-	temp->prev = prev;
-	temp->next = newNode;
+    iterator->next = newElement ;
+
+    if(newElement->next != NULL){
+        newElement->next->prev = newElement ;
+    }
 }
 
-void list_remove(struct list_node *headNode, int data) {
 
-	struct list_node* head = headNode;
-	if (head == NULL) {
-		return;
-	}
+/*
+ * listDelete
+ *
+ * Deletes an element from a doubly linked list.
+ */
+void listRemove(struct listElement *b)
+{
+	if(b->next != NULL)
+		b->next->prev = b->prev ;
 
-	if (head->data == data) {
-		headNode = head->next;
-		return;
-	}
+	b->prev->next = b->next ;
 
-	while(head->next) {
-		if (data == head->data) {
-			head->prev->next = head->next;
-			head = head->next;
-			continue;
-		}
-		head = head->next;
-	}
+	// NULLify the element's next and prev pointers to indicate
+	// that it is not linked into a list.
+	b->next = NULL ;
+	b->prev = NULL ;
 }
