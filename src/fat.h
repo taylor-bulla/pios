@@ -80,6 +80,6 @@ struct file {
 
 int fat_init();
 void fat_open(struct file* file, char* fileName);
-void read_file(struct file* file, char* buffer, unsigned int bytesToRead);
+void read_file(struct file* file, char* buffer);
 
 #endif
